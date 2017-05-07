@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+e#-*- coding: utf-8 -*-
 import tensorflow as tf
 import pandas as pd
 import numpy as np
@@ -8,7 +8,7 @@ import time
 import math
 import cv2
 import codecs, json
-from tensorflow.models.rnn import rnn_cell
+from tensorflow.contrib.rnn import core_rnn_cell
 from sklearn.metrics import average_precision_score
 
 class Answer_Generator():
@@ -28,11 +28,11 @@ class Answer_Generator():
 	self.embed_ques_W = tf.Variable(tf.random_uniform([self.vocabulary_size, self.input_embedding_size], -0.08, 0.08), name='embed_ques_W')
 
 	# encoder: RNN body
-	self.lstm_1 = rnn_cell.LSTMCell(rnn_size, input_embedding_size, use_peepholes=True)
-        self.lstm_dropout_1 = rnn_cell.DropoutWrapper(self.lstm_1, output_keep_prob = 1 - self.drop_out_rate)
-        self.lstm_2 = rnn_cell.LSTMCell(rnn_size, rnn_size, use_peepholes=True)
-        self.lstm_dropout_2 = rnn_cell.DropoutWrapper(self.lstm_2, output_keep_prob = 1 - self.drop_out_rate)
-	self.stacked_lstm = rnn_cell.MultiRNNCell([self.lstm_dropout_1, self.lstm_dropout_2])
+	self.lstm_1 = core_rnn_cell.LSTMCell(rnn_size, input_embedding_size, use_peepholes=True)
+        self.lstm_dropout_1 = core_rnn_cell.DropoutWrapper(self.lstm_1, output_keep_prob = 1 - self.drop_out_rate)
+        self.lstm_2 = core_rnn_cell.LSTMCell(rnn_size, rnn_size, use_peepholes=True)
+        self.lstm_dropout_2 = core_rnn_cell.DropoutWrapper(self.lstm_2, output_keep_prob = 1 - self.drop_out_rate)
+	self.stacked_lstm = core_rnn_cell.MultiRNNCell([self.lstm_dropout_1, self.lstm_dropout_2])
 
 	# state-embedding
         self.embed_state_W = tf.Variable(tf.random_uniform([2*rnn_size*rnn_layer, self.dim_hidden], -0.08,0.08),name='embed_state_W')
