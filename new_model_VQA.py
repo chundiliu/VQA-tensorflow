@@ -290,7 +290,7 @@ def train():
     train_op = opt.apply_gradients(clipped_gvs)
 
     tf.global_variables_initializer().run()
-
+    #saver.restore(sess, 'model_save/model-45000')
     print 'start training...'
     for itr in range(max_itr):
         tStart = time.time()
@@ -419,3 +419,9 @@ if __name__ == '__main__':
     with tf.device('/gpu:'+str(1)):
         test()
     
+
+
+try:
+    pass
+except Exception as e:
+    raise
