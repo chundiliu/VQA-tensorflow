@@ -12,7 +12,7 @@ import glob
 import numpy as np
 from scipy.misc import imread, imresize
 import scipy.io
-import pdb
+import ipdb
 import string
 import h5py
 from nltk.tokenize import word_tokenize
@@ -168,7 +168,9 @@ def main(params):
 
     imgs_train = json.load(open(params['input_train_json'], 'r'))
     imgs_test = json.load(open(params['input_test_json'], 'r'))
-
+    ipdb.set_trace()
+    ipdb.set_trace()
+    
     # get top answers
     top_ans = get_top_answers(imgs_train, params)
     atoi = {w:i+1 for i,w in enumerate(top_ans)}
